@@ -1,5 +1,9 @@
+import { useStats } from "../context/StatProvider"
+
 export const Home = () => {
   const home = "home"
+  const { test } = useStats()
+  console.log(test)
 
   return (
     <>

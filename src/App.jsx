@@ -7,10 +7,7 @@ function App() {
 
   return (
     <Routes>
-      <Route path='*' element={<Home />} />
       <Route path='/' element={<Home />} />
-      <Route path='/play' element={<Home />} />
-      <Route path='/stats' element={<Home />} />
     </Routes>
   )
 }
