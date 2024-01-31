@@ -4,8 +4,8 @@ import './nav.css';
 
 const Nav = () => {
   return (
-    <nav>
-      <ul>
+    <nav className='Navigation'>
+      <ul className='customUl'>
         <li>
           <Link to="/home" >Accueil</Link>
         </li>
