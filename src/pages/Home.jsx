@@ -1,3 +1,4 @@
+import { WordInput } from "../components/WordInput"
 import { useStats } from "../context/StatProvider"
 
 export const Home = () => {
@@ -8,6 +9,7 @@ export const Home = () => {
   return (
     <>
       <h1>{home}</h1>
+      <WordInput/>
     </>
   )
 }
