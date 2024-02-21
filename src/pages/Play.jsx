@@ -9,7 +9,7 @@ export const Play = () => {
   const [selectedLetters, setSelectedLetters] = useState([]);
   const [guess, setGuess] = useState('');
   const [wrongGuesses, setWrongGuesses] = useState([]);
-  const [name, setName] = useState(''); // Ajout d'une variable d'état pour le nom
+  const [name, setName] = useState('');
   const { word, loading, error } = useWord();
   const { win, setWin, loose, setLoose, trials, setTrials } = useStats();
   const [disable, setDisable] = useState(false);
@@ -25,15 +25,15 @@ export const Play = () => {
     console.log(selectedWord);
     console.log(word.toUpperCase().split('').every(letter => selectedWord.includes(letter)), "|||")
     if (word.toUpperCase().split('').every(letter => selectedWord.includes(letter))) {
-      if(!win){
-      setWin(true);
-      alert("Congratulations! You've guessed the word.");
-    }
-    const scores = JSON.parse(localStorage.getItem('scores')) || [];
+      if (!win) {
+        setWin(true);
+        console.log('win', win);
+      }
+      const scores = JSON.parse(localStorage.getItem('scores')) || [];
 
-    scores.push({ name, trials });
-  
-    localStorage.setItem('scores', JSON.stringify(scores));
+      scores.push({ name, trials });
+
+      localStorage.setItem('scores', JSON.stringify(scores));
     }
   }
 
@@ -59,7 +59,7 @@ export const Play = () => {
   };
 
   const handleGuessChange = (e) => {
-    const newGuess = e.target.value.toLowerCase();
+    const newGuess = e.target.value.toUpperCase();
     setGuess(newGuess);
     newGuess.split('').forEach(letter => {
       if (word.includes(letter) && !selectedLetters.includes(letter)) {
@@ -70,8 +70,8 @@ export const Play = () => {
 
   const handleGuessSubmit = (e) => {
     e.preventDefault();
-    if (guess === word.toLowerCase()) {
-      alert("Congratulations! You've guessed the word.");
+    if (guess === word.toUpperCase()) {
+      setWin(true);
     } else {
       setTrials(trials + 1);
       setGuess('');
@@ -100,11 +100,12 @@ export const Play = () => {
       <h1>Jouer au pendu</h1>
       <WordInput word={word} selectedLetters={selectedLetters} />
       <LetterChoice disable={disable} selectedLetters={selectedLetters} onLetterSelect={addSelectedLetter} />
-      {win && (
-               <form onSubmit={handleNameSubmit}>
-               <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Votre nom" />
-               <button type="submit">Envoyer</button>
-             </form>
+      {win == true && <p>Bravo ! Vous avez gagné </p>}
+      {win == true && (
+        <form onSubmit={handleNameSubmit}>
+          <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Votre nom" />
+          <button type="submit">Envoyer</button>
+        </form>
       )}
       <div>
         <form onSubmit={handleGuessSubmit}>
@@ -113,7 +114,7 @@ export const Play = () => {
             disabled={disable}
             id="word-guess"
             type="text"
-            value={guess}
+            value={guess.toUpperCase()}
             onChange={handleGuessChange}
             placeholder="Enter your guess"
           />
